@@ -1,41 +1,62 @@
 // https://www.naukri.com/code360/problems/check-if-the-string-is-a-palindrome_1062633?utm_source=youtube&utm_medium=affiliate&utm_campaign=love_babbar_5
 
-#include <bits/stdc++.h> 
-#include <string>
-#include <cctype>
-#include <iostream>
+#include<string>
+#include<iostream>
+#include<vector>
 using namespace std;
-
-bool checkPalindrome(string s)
-{
-    int st = 0, e = s.size() - 1;
-
-    while (st < e) {
-
-        int check1 = s[st];
-        int check2 = s[e];
-
-        if (!((check1 >= 48 && check1 <= 57) || 
-              (check1 >= 65 && check1 <= 90) || 
-              (check1 >= 97 && check1 <= 122))) {
-            st++;
-            continue;
+class Solution {
+private:
+    bool valid(char ch) {
+        if( (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
+            return 1;
         }
+        
+        return 0;
+    }
+    
+    char toLowerCase(char ch) {
+    if( (ch >='a' && ch <='z') || (ch >='0' && ch <='9') )
+        return ch;
+    else{
+        char temp = ch - 'A' + 'a';
+        return temp;
+    }
+}
+    bool checkPalindrome(string a) {
+    int s = 0;
+    int e = a.length()-1;
 
-        if (!((check2 >= 48 && check2 <= 57) || 
-              (check2 >= 65 && check2 <= 90) || 
-              (check2 >= 97 && check2 <= 122))) {
-            e--;
-            continue;
+    while(s<=e) {
+        if(a[s] != a[e])
+        {
+            return 0;       
         }
-
-        if (tolower(s[st]) == tolower(s[e])) {
-            st++;
+        else{
+            s++;
             e--;
-        } else {
-            return false;
         }
     }
-
-    return true;
+    return 1;
 }
+public:
+    bool isPalindrome(string s) {
+        
+        //faltu character hatado
+        string temp = "";
+        
+        for(int j=0; j<s.length(); j++) {   
+            if(valid(s[j])) {
+                temp.push_back(s[j]);
+            }
+        }
+        
+        //lowercase me kardo
+        for(int j=0; j<temp.length(); j++) { 
+            temp[j] = toLowerCase(temp[j]);
+        }
+        
+        //check palindrome
+        return checkPalindrome(temp);
+        
+    }
+};
